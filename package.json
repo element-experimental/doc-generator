@@ -3,12 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "vue-cli-service serve src/entry-client.js",
+    "build": "vue-cli-service build src/entry-client.js",
+    "build-ssr": "rm -rf ssr-dist && yarn run build-ssr-server && yarn run build-ssr-client",
+    "build-ssr-server": "ENTRY_TYPE=SSR SSR_TYPE=server vue-cli-service build src/entry-server.js --dest ssr-dist --no-clean",
+    "build-ssr-client": "ENTRY_TYPE=SSR SSR_TYPE=client vue-cli-service build src/entry-client.js --dest ssr-dist --no-clean",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "vue": "^2.5.17"
+    "express": "^4.16.4",
+    "vue": "^2.5.17",
+    "vue-router": "^3.0.1",
+    "vue-server-renderer": "^2.5.17",
+    "webpack-node-externals": "^1.7.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.4",

@@ -1,26 +1,24 @@
-# vue-ssr
+# doc-generator
 
-## Project setup
+> ElementUI 的文档站点在现在（2018年11月27日）看起来有些落后了，SEO 以及用户体验都不是特别好。原本想使用 vuepress 来构建文档站点，然而并没有迁移成功。文档迁移是一个漫长的计划，自己先做一个简单的文档生成工具（至少保证了文档不经大规模的修改即可迁移成功）。
+> 因此：功能不必多，够用就行。
+
+### 安装依赖
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### 开发
 ```
 yarn run serve
 ```
 
-### Compiles and minifies for production
+### 构建生成文件
 ```
 yarn run build
 ```
 
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
+### 格式化代码
 ```
 yarn run lint
 ```
