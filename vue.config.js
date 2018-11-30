@@ -1,31 +1,63 @@
 
+const path = require('path')
 const nodeExternals = require('webpack-node-externals')
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin')
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
+const docMdLoaderPath = require.resolve('./webpack-loader/doc-makrdown-loader')
+const docPath = path.resolve('./src/docs')
 
 const isSSR = process.env.ENTRY_TYPE === 'SSR'
-const extractCSS = process.env.NODE_ENV === 'production' && !isSSR
+const isProduction = process.env.NODE_ENV === 'production'
+const extractCSS = isProduction && !isSSR
+// todo: 使用 LRU 开启缓存优化
 
 module.exports = {
   css: {
     extract: extractCSS
   },
   chainWebpack: (config) => {
+    config.merge({
+      module: {
+        rule: {
+          eslint: {
+            exclude: [docPath]
+          }
+        }
+      }
+    })
+
+    config.module.rule('markdown').test(/\.md$/)
+      .use('vue-loader').loader('vue-loader').options({
+        compilerOptions: {
+          preserveWhitespace: true
+        }
+      }).end()
+      .use('markdown-to-vue').loader(docMdLoaderPath)
+
     if (isSSR) {
       const SSR_TYPE = process.env.SSR_TYPE
       if (!SSR_TYPE) {
         throw new Error('SSR_TYPE is required')
       }
-      // 移除 cache-loader，rules 是一个 chainMap，使用 clear 方法清除https://github.com/neutrinojs/webpack-chain#chainedmap
+      // 移除 cache-loader，这会造成在服务端渲染出错。
+      // rules 是一个 chainMap，使用 clear 方法清除 https://github.com/neutrinojs/webpack-chain#chainedmap
       const vueRule = config.module.rule('vue')
       vueRule.uses.clear()
-      vueRule.use('vue-loader').loader('vue-loader')
+      vueRule.use('vue-loader').loader('vue-loader').options({
+        compilerOptions: {
+          preserveWhitespace: true
+        }
+      })
 
       if (SSR_TYPE === 'server') {
         const externals = nodeExternals({
           whitelist: /\.css$/
         })
-        config.target('node').devtool('source-map').externals(externals)
+        config.target('node').devtool('source-map').externals(externals).externals({
+          Vue: 'Vue',
+          VueRouter: 'vue-router',
+          ElementUI: 'ElementUI'
+        })
         config.output.libraryTarget('commonjs2')
         config.plugin('VueSSRServerPlugin').use(VueSSRServerPlugin)
         // https://github.com/webpack-contrib/mini-css-extract-plugin/issues/90#issuecomment-410581945
