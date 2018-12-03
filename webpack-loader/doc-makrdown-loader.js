@@ -28,13 +28,17 @@ md.use(mdContainer, 'demo', {
       const style = striptags(content, 'style')
       const extractHtmlReg = /(?:<style>(?:.|\n)*<\/style>)|(?:<script>(?:.|\n)*<\/script>)/g
       const html = content.replace(extractHtmlReg, '').trim()
-      let jsfiddle = { html: html, script: script, style: style }
+      const jsfiddle = JSON.stringify({ html: html, script: script, style: style })
       const descriptionHTML = md.render(description)
 
-      jsfiddle = md.utils.escapeHtml(JSON.stringify(jsfiddle));
+      const mdJsfiddle = md.utils.escapeHtml();
 
-      return `<demo-block class="demo-box" :jsfiddle="${jsfiddle}">
-                <div class="source" slot="source">${html}</div>
+      return `<demo-block class="demo-box" :jsfiddle="${mdJsfiddle}">
+                <div class="source" slot="source">
+                  ${ html }
+                  <!--element-demo-->
+                  <!-- jsfiddle:${ jsfiddle } -->
+                </div>
                 ${descriptionHTML}
                 <div class="highlight" slot="highlight">`;
     }
@@ -46,6 +50,16 @@ md.use(mdContainer, 'tip')
 md.use(mdContainer, 'warning')
 
 module.exports = function (source) {
+  // todo 提取
+  // const componenets = {}
+  // const content = md.render(source)
+  // // 把数据提取出来
+  // const demoReg = /<!--element-demo-->/g
+  // const jsfiddleReg = /<!-- jsfiddle:(.*+) -->/
+  // let demo
+  // while ((demo = demoReg.exec(content)) !== null) {
+  // }
+  // demoReg.exec()
   return `
     <template>
       <div class="element-doc">
@@ -54,7 +68,8 @@ module.exports = function (source) {
     </template>
     <script>
       export default {
-        name: 'component-doc'
+        name: 'component-doc',
+        // componenets: {}
       }
     </sript>
   `

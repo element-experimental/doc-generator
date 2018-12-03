@@ -9,9 +9,8 @@
 </template>
 
 <style lang="scss">
-  // @import 'highlight.js/styles/color-brewer.css';
-  // @import '@/assets/styles/common.css';
-  // @import '@/assets/styles/fonts/style.css';
+  @import './assets/styles/common.css';
+  @import './assets/styles/fonts/style.css';
   html, body {
     margin: 0;
     padding: 0;

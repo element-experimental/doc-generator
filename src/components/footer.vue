@@ -161,7 +161,7 @@
 </style>
 
 <script type="text/babel">
-  // import compoLang from '../i18n/component.json';
+  import compoLang from '../i18n/component.json';
   // import { version } from 'main/index.js';
   const version = '2.4.11'
   export default {
@@ -173,12 +173,15 @@
 
     computed: {
       lang() {
-        return this.$route.path.split('/')[1] || 'zh-CN';
+        // return this.$route.path.split('/')[1] || 'zh-CN';
+        return 'zh-CN'
       },
 
       langConfig() {
-        // return compoLang.filter(config => config.lang === this.lang)[0]['footer'];
-        return 'footer'
+        const lang = this.lang || 'zh-CN'
+        const config = compoLang.find(config => config.lang === lang)
+        return config.footer
+        // return compoLang.filter(config => config.lang === (this.lang || 'zh-CN'))[0]['footer'];
       },
 
       gitterLink() {
