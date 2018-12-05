@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`docMdLoader 1`] = `
+"
+    <template>
+      <div class=\\"element-doc\\">
+        <h2 id=\\"title-1\\"><a class=\\"header-anchor\\" href=\\"#title-1\\" aria-hidden=\\"true\\">¶</a> Title 1</h2>
+<p>demo 1</p>
+<demo-block class=\\"demo-box\\" :jsfiddle=\\"{&quot;html&quot;:&quot;&lt;el-alert&gt;x&lt;/el-alert&gt;&quot;,&quot;script&quot;:&quot;export default {\\\\n  data() {\\\\n    return {\\\\n      x: 1\\\\n    }\\\\n  }\\\\n}&quot;,&quot;style&quot;:&quot;.el-alert {\\\\n  font-size: 20\\\\n}&quot;}\\">
+                <div class=\\"source\\" slot=\\"source\\">
+                  <element-demo0 />
+                </div>
+                <p>demo content</p>
+
+                <div class=\\"highlight\\" slot=\\"highlight\\"><pre><code class=\\"language-html\\">&lt;el-alert&gt;x&lt;/el-alert&gt;
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      x: 1
+    }
+  }
+}
+&lt;/script&gt;
+&lt;style&gt;
+.el-alert {
+  font-size: 20
+}
+&lt;/style&gt;
+</code></pre>
+</div></demo-block>
+
+      </div>
+    </template>
+    <script>
+      export default {
+        name: 'component-doc',
+        components: {
+          \\"element-demo0\\": (function demo() {
+    
+  const { render, staticRenderFns } = (function(){
+    var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(\\"div\\", [_c(\\"el-alert\\", [_vm._v(\\"x\\")])], 1)
+}
+var staticRenderFns = []
+render._withStripped = true
+
+    return { render, staticRenderFns }
+  })()
+  
+    const democomponentExport = {
+  data() {
+    return {
+      x: 1
+    }
+  }
+}
+    return {
+      ...democomponentExport,
+      render,
+      staticRenderFns
+    }
+  })(),
+        }
+      }
+    </script>
+    <style>
+      .el-alert {
+  font-size: 20
+}
+    </style>
+  "
+`;

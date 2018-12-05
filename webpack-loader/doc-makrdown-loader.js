@@ -2,7 +2,7 @@
 const md = require('markdown-it')()
 const mdContainer = require('markdown-it-container')
 const mdAnchor = require('markdown-it-anchor')
-const striptags = require('striptags')
+const { stripScript, stripStyle, stripTemplate, genInlineComponentText } = require('./util')
 const slugify = require('transliteration').slugify
 
 // 处理 link
@@ -24,22 +24,27 @@ md.use(mdContainer, 'demo', {
     if (tokens[idx].nesting === 1) {
       const description = (m && m.length > 1) ? m[1] : ''
       const content = tokens[idx + 1].content
-      const script = striptags(content, 'script')
-      const style = striptags(content, 'style')
-      const extractHtmlReg = /(?:<style>(?:.|\n)*<\/style>)|(?:<script>(?:.|\n)*<\/script>)/g
-      const html = content.replace(extractHtmlReg, '').trim()
+      // 这里的做法有些问题有待调整
+      if (!content) {
+        console.warn(`
+        必须要按照下面格式书写文档
+        :::demo 内容
+        \`\`\`html
+        <el-alert>xx</el-alert>
+        \`\`\`
+        `)
+      }
+      const script = stripScript(content)
+      const style = stripStyle(content)
+      const html = stripTemplate(content)
       const jsfiddle = JSON.stringify({ html: html, script: script, style: style })
-      const descriptionHTML = md.render(description)
-
-      const mdJsfiddle = md.utils.escapeHtml();
+      const mdJsfiddle = md.utils.escapeHtml(jsfiddle)
 
       return `<demo-block class="demo-box" :jsfiddle="${mdJsfiddle}">
                 <div class="source" slot="source">
-                  ${ html }
-                  <!--element-demo-->
-                  <!-- jsfiddle:${ jsfiddle } -->
+                  <!--element-demo: ${jsfiddle}-->
                 </div>
-                ${descriptionHTML}
+                ${md.render(description)}
                 <div class="highlight" slot="highlight">`;
     }
     return '</div></demo-block>\n';
@@ -50,27 +55,46 @@ md.use(mdContainer, 'tip')
 md.use(mdContainer, 'warning')
 
 module.exports = function (source) {
-  // todo 提取
-  // const componenets = {}
-  // const content = md.render(source)
-  // // 把数据提取出来
-  // const demoReg = /<!--element-demo-->/g
-  // const jsfiddleReg = /<!-- jsfiddle:(.*+) -->/
-  // let demo
-  // while ((demo = demoReg.exec(content)) !== null) {
-  // }
-  // demoReg.exec()
+  let componenetsString = ''
+  // todo: 这里有待优化
+  let styleSheets = ''
+  const content = md.render(source)
+  let start = 0
+  let index = 0
+  let output = ''
+  const demoReg = /<!--element-demo: (.*)-->/g
+  let match
+  while ((match = demoReg.exec(content)) !== null) {
+    if (match[1]) {
+      output += content.slice(start, match.index)
+      const demoComponentName = `element-demo${index}`
+      output += `<${demoComponentName} />`
+
+      const { html, script, style } = JSON.parse(match[1])
+      styleSheets += style
+      let demoComponentContent = genInlineComponentText(html, script)
+      componenetsString += `${JSON.stringify(demoComponentName)}: ${demoComponentContent},`
+      index ++
+      start = demoReg.lastIndex
+    }
+  }
+  output += content.slice(start)
   return `
     <template>
       <div class="element-doc">
-        ${md.render(source)}
+        ${output}
       </div>
     </template>
     <script>
       export default {
         name: 'component-doc',
-        // componenets: {}
+        components: {
+          ${componenetsString}
+        }
       }
-    </sript>
+    </script>
+    <style>
+      ${styleSheets}
+    </style>
   `
 }

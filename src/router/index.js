@@ -20,7 +20,7 @@ export function createRouter() {
       },
       {
         path: '/component',
-        // redirect: '/component/installation',
+        redirect: '/component/installation',
         component: ComponentPageWrap,
         children: genComponentRoutes()
       },

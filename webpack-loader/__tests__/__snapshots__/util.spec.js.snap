@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test all loader utils genInlineComponentText 1`] = `
+"(function demo() {
+    
+  const { render, staticRenderFns } = (function(){
+    var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(\\"div\\", [[_c(\\"div\\", [_vm._v(\\"xxxx\\")])]], 2)
+}
+var staticRenderFns = []
+render._withStripped = true
+
+    return { render, staticRenderFns }
+  })()
+  
+    const democomponentExport = {
+  name: 'sfc'
+}
+    return {
+      ...democomponentExport,
+      render,
+      staticRenderFns
+    }
+  })()"
+`;
+
+exports[`test all loader utils stripScript 1`] = `
+"export default {
+  name: 'sfc'
+}"
+`;
+
+exports[`test all loader utils stripStyle 1`] = `
+"div {
+  font-size: 12px;
+}"
+`;
+
+exports[`test all loader utils stripTemplate 1`] = `
+<template>
+  <div>xxxx</div>
+</template>
+`;
