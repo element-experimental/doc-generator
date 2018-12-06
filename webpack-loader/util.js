@@ -2,13 +2,13 @@ const { compileTemplate } = require('@vue/component-compiler-utils')
 const compiler = require('vue-template-compiler')
 
 function stripScript(content) {
-  const result = content.match(/<script\s*>((.|\n)*)<\/script\s*>/)
-  return result ? result[1].trim() : ''
+  const result = content.match(/<(script)>([\s\S]+)<\/\1>/)
+  return (result && result[2]) ? result[2].trim() : ''
 }
 
 function stripStyle(content) {
-  const result = content.match(/<style\s*>((.|\n)*)<\/style\s*>/)
-  return result ? result[1].trim() : ''
+  const result = content.match(/<(style)\s*>([\s\S]+)<\/\1>/)
+  return (result && result[2]) ? result[2].trim() : ''
 }
 
 // 编写例子时不一定有 template。所以采取的方案是剔除其他的内容
@@ -17,7 +17,7 @@ function stripTemplate(content) {
   if (!content) {
     return content
   }
-  return content.replace(/(?:<style\s*>(?:.|\n)*<\/style\s*>)|(?:<script\s*>(?:.|\n)*<\/script\s*>)/g, '').trim()
+  return content.replace(/<(script|style)[\s\S]+<\/\1>/g, '').trim()
 }
 
 function pad (source) {
@@ -50,10 +50,7 @@ function genInlineComponentText(template, script) {
     )
   }
   let demoComponentContent = `
-  const { render, staticRenderFns } = (function(){
     ${compiled.code}
-    return { render, staticRenderFns }
-  })()
   `
   // todo: 这里采用了硬编码有待改进
   script = script.trim()

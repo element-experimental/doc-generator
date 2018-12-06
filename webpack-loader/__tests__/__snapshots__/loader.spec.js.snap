@@ -12,7 +12,7 @@ exports[`docMdLoader 1`] = `
                 </div>
                 <p>demo content</p>
 
-                <div class=\\"highlight\\" slot=\\"highlight\\"><pre><code class=\\"language-html\\">&lt;el-alert&gt;x&lt;/el-alert&gt;
+                <div class=\\"highlight\\" slot=\\"highlight\\" v-pre><pre><code class=\\"language-html\\">&lt;el-alert&gt;x&lt;/el-alert&gt;
 &lt;script&gt;
 export default {
   data() {
@@ -38,7 +38,6 @@ export default {
         components: {
           \\"element-demo0\\": (function demo() {
     
-  const { render, staticRenderFns } = (function(){
     var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -48,8 +47,6 @@ export default {
 var staticRenderFns = []
 render._withStripped = true
 
-    return { render, staticRenderFns }
-  })()
   
     const democomponentExport = {
   data() {

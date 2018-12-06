@@ -366,7 +366,7 @@
 <script>
   import ThemePicker from './theme-picker.vue';
   import AlgoliaSearch from './search.vue';
-  // // import compoLang from '../i18n/component.json';
+  import compoLang from '../i18n/component.json';
   // import { version } from 'main/index.js';
   const version = '2.4.11'
   export default {
@@ -398,11 +398,11 @@
         return this.langs[this.lang] || '中文';
       },
       langConfig() {
-        // return compoLang.filter(config => config.lang === this.lang)[0]['header'];
-        return 'header'
+        return compoLang.filter(config => config.lang === this.lang)[0]['header'];
+        // return 'header'
       },
       isComponentPage() {
-        return /^component/.test(this.$route.name);
+        return /component\/\w+/.test(this.$route.path);
       }
     },
 

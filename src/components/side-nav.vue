@@ -59,7 +59,7 @@
             :key="key"
             >
             <div class="nav-group__title" @click="expandMenu">{{group.groupName}}</div>
-            <ul class="pure-menu-list" v-if="!navItem.disabled">
+            <ul class="pure-menu-list">
               <li
                 class="nav-item"
                 v-for="(navItem, key) in group.list"
@@ -197,7 +197,7 @@
 </style>
 <script>
   // import bus from '../bus';
-  // import compoLang from '../i18n/component.json';
+  import compoLang from '../i18n/component.json'
 
   export default {
     props: {
@@ -233,11 +233,12 @@
         return style;
       },
       lang() {
-        return this.$route.meta.lang;
+        // return this.$route.meta.lang;
+        return 'zh-CN'
       },
       langConfig() {
-        // return compoLang.filter(config => config.lang === this.lang)[0]['nav'];
-        return 'nav'
+        return compoLang.filter(config => config.lang === this.lang)[0]['nav']
+        // return 'nav'
       }
     },
     methods: {

@@ -3,7 +3,6 @@
 exports[`test all loader utils genInlineComponentText 1`] = `
 "(function demo() {
     
-  const { render, staticRenderFns } = (function(){
     var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -13,8 +12,6 @@ exports[`test all loader utils genInlineComponentText 1`] = `
 var staticRenderFns = []
 render._withStripped = true
 
-    return { render, staticRenderFns }
-  })()
   
     const democomponentExport = {
   name: 'sfc'

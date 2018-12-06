@@ -45,9 +45,9 @@ md.use(mdContainer, 'demo', {
                   <!--element-demo: ${jsfiddle}-->
                 </div>
                 ${md.render(description)}
-                <div class="highlight" slot="highlight">`;
+                <div class="highlight" slot="highlight" v-pre>`
     }
-    return '</div></demo-block>\n';
+    return '</div></demo-block>\n'
   }
 })
 

@@ -91,7 +91,8 @@
 :::
 
 ### 图标集合
-
+:::demo
+```html
 <ul class="icon-list">
   <li v-for="name in icons" :key="name">
     <span>
@@ -100,3 +101,5 @@
     </span>
   </li>
 </ul>
+```
+:::

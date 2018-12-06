@@ -19,7 +19,7 @@ export function createRouter() {
         component: Home
       },
       {
-        path: '/component',
+        path: '/zh-CN/component',
         redirect: '/component/installation',
         component: ComponentPageWrap,
         children: genComponentRoutes()
