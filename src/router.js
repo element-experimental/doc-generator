@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/views/index.vue'
 import ComponentPageWrap from '@/views/component.vue'
-import navConfig from '../nav.config.json'
+import navConfig from '@/nav.config.json'
 
 Vue.use(Router)
 

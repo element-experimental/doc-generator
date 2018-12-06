@@ -1,16 +1,22 @@
 import { createApp } from './main'
 
-export default function(context) {
-  return new Promise((resolve, reject) => {
-    const { app, router } = createApp()
+export default context => {
+  return new Promise(async (resolve, reject) => {
+    const {
+      app,
+      router,
+    } = await createApp()
+
     router.push(context.url)
+
     router.onReady(() => {
       const matchedComponents = router.getMatchedComponents()
-      // 匹配不到的路由，执行 reject 函数，并返回 404
-      if (!matchedComponents.length) {
-        return reject({ code: 404 })
-      }
-      resolve(app)
-    })
+
+      Promise.all([
+      ]).then(() => {
+
+        resolve(app)
+      })
+    }, reject)
   })
 }

@@ -79,6 +79,10 @@ module.exports = function (source) {
     }
   }
   output += content.slice(start)
+  styleSheets = styleSheets.trim()
+  if (styleSheets) {
+    styleSheets = `<style>${styleSheets}</style>`
+  }
   return `
     <template>
       <div class="element-doc">
@@ -93,8 +97,6 @@ module.exports = function (source) {
         }
       }
     </script>
-    <style>
-      ${styleSheets}
-    </style>
+    ${styleSheets}
   `
 }

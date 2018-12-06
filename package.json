@@ -6,10 +6,11 @@
     "serve": "vue-cli-service serve src/entry-client.js",
     "build": "vue-cli-service build src/entry-client.js",
     "lint": "vue-cli-service lint",
-    "build-ssr": "rm -rf ssr-dist && yarn run build-ssr-server && yarn run build-ssr-client",
-    "build-ssr-client": "ENTRY_TYPE=SSR SSR_TYPE=client vue-cli-service build src/entry-client.js --dest ssr-dist --no-clean",
-    "build-ssr-server": "ENTRY_TYPE=SSR SSR_TYPE=server vue-cli-service build src/entry-server.js --dest ssr-dist --no-clean",
-    "test:unit": "vue-cli-service test:unit"
+    "ssr:build": "vue-cli-service ssr:build",
+    "ssr:serve": "vue-cli-service ssr:serve",
+    "ssr:start": "cross-env NODE_ENV=production vue-cli-service ssr:serve --mode production",
+    "test:unit": "vue-cli-service test:unit",
+    "doc-build": "npm run ssr:build && node build.js && cp -r ssr-dist/zh-CN ./dist"
   },
   "dependencies": {
     "element-ui": "^2.4.5",
@@ -20,6 +21,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "devDependencies": {
+    "@akryum/vue-cli-plugin-ssr": "^0.3.0",
     "@vue/cli-plugin-babel": "^3.0.4",
     "@vue/cli-plugin-eslint": "^3.0.4",
     "@vue/cli-plugin-unit-jest": "^3.2.0",
@@ -32,6 +34,7 @@
     "babel-jest": "^23.6.0",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0-0",
+    "fs-extra": "^7.0.1",
     "highlight.js": "^9.13.1",
     "loader-utils": "^1.1.0",
     "markdown-it": "^8.4.2",

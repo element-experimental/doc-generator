@@ -2,9 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import { createRouter } from './router'
 import ElementUI from 'element-ui'
-import demoBlock from './components/demo-block.vue'
-import MainFooter from './components/footer.vue'
-import MainHeader from './components/header.vue'
+import demoBlock from './components/demo-block'
+import MainFooter from './components/footer'
+import MainHeader from './components/header'
 import SideNav from './components/side-nav'
 import FooterNav from './components/footer-nav'
 
@@ -17,16 +17,23 @@ Vue.component('main-header', MainHeader)
 Vue.component('side-nav', SideNav)
 Vue.component('footer-nav', FooterNav)
 
-export function createApp() {
+export async function createApp({
+  beforeApp = () => {},
+  afterApp = () => {}
+} = {}) {
   const router = createRouter()
-
+  await beforeApp({
+    router
+  })
   const app = new Vue({
     router,
     render: h => h(App)
   })
-  return {
+  const result = {
     app,
     router
   }
+  await afterApp(result)
+  return result
 }
 

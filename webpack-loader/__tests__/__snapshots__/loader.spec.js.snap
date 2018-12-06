@@ -64,10 +64,8 @@ render._withStripped = true
         }
       }
     </script>
-    <style>
-      .el-alert {
+    <style>.el-alert {
   font-size: 20
-}
-    </style>
+}</style>
   "
 `;
