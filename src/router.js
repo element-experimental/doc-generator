@@ -89,4 +89,3 @@ function genMiscRoutes() {
   return [guideRoute, resourceRoute]
 }
 
-// function load() {}
