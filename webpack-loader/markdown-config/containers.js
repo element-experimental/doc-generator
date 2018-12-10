@@ -4,7 +4,7 @@ const { stripScript, stripStyle, stripTemplate } = require('../util')
 module.exports = (md) => {
   md.use(mdContainer, 'demo', {
     validate(params) {
-      return params.trim().match(/^demo\s+(.*)$/)
+      return params.trim().match(/^demo\s*(.*)$/)
     },
   
     render (tokens, idx) {

@@ -6,9 +6,8 @@
     "serve": "vue-cli-service serve src/entry-client.js",
     "build": "vue-cli-service build src/entry-client.js",
     "lint": "vue-cli-service lint",
-    "ssr:build": "vue-cli-service ssr:build",
-    "ssr:serve": "vue-cli-service ssr:serve",
-    "ssr:start": "SSR=START cross-env NODE_ENV=production vue-cli-service ssr:serve --mode production",
+    "ssr:build": "type=SSR vue-cli-service ssr:build",
+    "ssr:start": "type=SSR cross-env NODE_ENV=production vue-cli-service ssr:serve --mode production",
     "test:unit": "vue-cli-service test:unit",
     "doc-build": "npm run ssr:build && node build.js && cp -r ssr-dist/zh-CN ./dist"
   },

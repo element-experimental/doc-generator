@@ -15,10 +15,20 @@ yarn run serve
 
 ### 构建生成文件
 ```
-yarn run build
+yarn run doc-build
 ```
 
 ### 格式化代码
 ```
 yarn run lint
 ```
+
+### 剩余功能开发
+
+- [x] 解析 md，编译 demo
+- [ ] 代码高亮功能
+- [ ] 抽象出配置文件：静态资源，组件，路由以及多语言支持
+- [ ] 原有文档站点的改造
+- [ ] 命令行工具的设计
+- [ ] 编写迁移脚本：剔除多余的脚本
+- [ ] 优化 vue-cli-ssr-plugin，并争取提一个 pr

@@ -11,6 +11,7 @@
 <style lang="scss">
   @import './assets/styles/common.css';
   @import './assets/styles/fonts/style.css';
+  @import './style/code.scss';
   html, body {
     margin: 0;
     padding: 0;

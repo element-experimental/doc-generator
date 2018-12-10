@@ -1,6 +1,5 @@
 const Config = require('markdown-it-chain')
 const anchorPlugin = require('markdown-it-anchor')
-// const mdContainer = require('markdown-it-container')
 const slugify = require('transliteration').slugify
 const highlight = require('./highlight')
 const containers = require('./containers')

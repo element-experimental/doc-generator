@@ -2,7 +2,7 @@
 const path = require('path')
 const docMdLoaderPath = require.resolve('./webpack-loader/doc-makrdown-loader')
 const docPath = path.resolve('./src/docs')
-const IS_SSR_START = process.env.SSR === 'START'
+const IS_SSR = process.env.type === 'SSR'
 
 module.exports = {
   chainWebpack: (config) => {
@@ -25,10 +25,13 @@ module.exports = {
       }).end()
       .use('markdown-to-vue').loader(docMdLoaderPath)
     
-  },
-  pluginOptions: {
-    ssr: {
-      templatePath: path.resolve(__dirname, `./${IS_SSR_START ? 'dist' : 'ssr'}/index.html`)
+    if (IS_SSR) {
+      config
+        .plugin('html')
+        .tap(args => {
+          args[0].template = path.resolve(__dirname, './ssr/index.html')
+          return args
+        })
     }
   }
 }
