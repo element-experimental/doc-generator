@@ -1,16 +1,16 @@
 const Config = require('markdown-it-chain')
 const anchorPlugin = require('markdown-it-anchor')
 const slugify = require('transliteration').slugify
-const highlight = require('./highlight')
 const containers = require('./containers')
+const overWriteFenceRule = require('./fence')
 
 const config = new Config()
 
 config
-  .options
-    // .html(false)
-    .highlight(highlight)
-    .end()
+  // .options
+  //   // .html(false)
+  //   .highlight(highlight)
+  //   .end()
   
   .plugin('anchor')
     .use(anchorPlugin, [{
@@ -25,4 +25,7 @@ config
     .use(containers)
     .end()
 
-module.exports = config.toMd()
+const md = config.toMd()
+overWriteFenceRule(md)
+
+module.exports = md

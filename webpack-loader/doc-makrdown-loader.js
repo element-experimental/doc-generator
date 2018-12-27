@@ -1,5 +1,5 @@
 const md = require('./markdown-config')
-const { genInlineComponentText } = require('./util')
+const { stripScript, stripStyle, stripTemplate, genInlineComponentText } = require('./util')
 
 module.exports = function (source) {
   let componenetsString = ''
@@ -8,15 +8,18 @@ module.exports = function (source) {
   let start = 0
   let index = 0
   let output = ''
-  const demoReg = /<!--element-demo: (.*)-->/g
+  // todo: 换一种实现方式
+  const demoReg = /<!--element-demo: ([\S\s]*)-->/g
   let match
   while ((match = demoReg.exec(content)) !== null) {
-    if (match[1]) {
+    const demoContent = match[1]
+    if (demoContent) {
       output += content.slice(start, match.index)
       const demoComponentName = `element-demo${index}`
       output += `<${demoComponentName} />`
-
-      const { html, script, style } = JSON.parse(match[1])
+      const html = stripTemplate(demoContent)
+      const script = stripScript(demoContent)
+      const style = stripStyle(demoContent)
       styleSheets += style
       let demoComponentContent = genInlineComponentText(html, script)
       componenetsString += `${JSON.stringify(demoComponentName)}: ${demoComponentContent},`
