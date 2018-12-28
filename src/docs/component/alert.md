@@ -149,7 +149,7 @@
 
 ### 带有 icon 和辅助性文字介绍
 
-:::demo 最后，这是一个同时具有 icon 和辅助性文字的样例。
+:::demo 最后，这是一个同时具有 icon 和辅助性文字的样例。ss
 ```html
 <template>
   <el-alert

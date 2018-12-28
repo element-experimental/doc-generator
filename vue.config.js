@@ -6,7 +6,7 @@ const IS_SSR = process.env.type === 'SSR'
 
 module.exports = {
   chainWebpack: (config) => {
-    // 避免 eslint 校验格式
+    // 避免 eslint 校验格式，支持导入 md 文件
     config.merge({
       module: {
         rule: {
@@ -14,6 +14,9 @@ module.exports = {
             exclude: [docPath]
           }
         }
+      },
+      resolve: {
+        extensions: ['.md']
       }
     })
 
